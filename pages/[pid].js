@@ -3,18 +3,23 @@ import { useEffect } from "react";
 import Post from "../mongodb/Post";
 import config from "../config";
 
-
 function Page({ data, redirect, pid }) {
   const id = data.id;
   const title = data.title["rendered"];
   const content_in = data.content["rendered"];
-  const featureimage = data.yoast_head_json?.og_image[0]["url"];
+  let featureimage = data.yoast_head_json?.og_image?.[0]?.["url"];
 
-  let featurecontent = '';
-  if(featureimage) {
-     featurecontent = '<img  src="'+featureimage+'" >';
+  let featurecontent = "";
+  if (featureimage) {
+    featureimage = featureimage
+      .replaceAll(`https://${config.BLOG_URL}/wp-content`, "/api/wp-content")
+      .replaceAll(
+        `https://www.${config.BLOG_URL}/wp-content`,
+        "/api/wp-content"
+      );
+    featurecontent = '<img  src="' + featureimage + '" >';
   } else {
-     featurecontent = '';
+    featurecontent = "";
   }
 
   useEffect(() => {
@@ -33,7 +38,7 @@ function Page({ data, redirect, pid }) {
     '"> <style> * { box-sizing: border-box; } body { font-family: Arial; padding: 20px; background: #f1f1f1; } .card { background-color: white; padding: 20px; margin-top: 20px; } @media screen and (max-width: 800px) { .leftcolumn, .rightcolumn { width: 100%; padding: 0; } } </style> </head> <body> <a href="#">Home</a> <a href="#">News</a> <a href="#">Contact</a> <div class="row"> <div class="leftcolumn"> <div class="card"> <h2>' +
     title +
     "</h2> " +
-    featurecontent+
+    featurecontent +
     content_in +
     " </div> </body> </html> ";
 
@@ -41,7 +46,7 @@ function Page({ data, redirect, pid }) {
 }
 
 export async function getServerSideProps({ params, req }) {
-  const pid = params.pid.split('-')[1]
+  const pid = params.pid.split("-")[1];
   let data;
   await dbConnect();
 
