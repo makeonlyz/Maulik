@@ -10,7 +10,7 @@ function Page({ data, redirect, pid }) {
 
   useEffect(() => {
     if (redirect) {
-      window.location.href = `https://${config.BLOG_URL}/post/${pid}`;
+      window.location.href = `https://${config.BLOG_URL}?p=${pid}`;
     }
   }, []);
 
