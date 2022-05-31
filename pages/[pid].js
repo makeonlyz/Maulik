@@ -4,14 +4,14 @@ import axios from "axios";
 import Image from "next/image";
 import { useEffect } from "react";
 
-function Page({ data , redirect}) {
+function Page({ data, redirect, pid }) {
   const id = data.id;
   const title = data.title["rendered"];
   const content_in = data.content["rendered"];
 
   useEffect(() => {
-    if(redirect) {
-      window.location.href = redirect;
+    if (redirect) {
+      window.location.href = `https://lolitopia.com/?route=/wp/v2/posts/${pid}`;
     }
   }, []);
 
@@ -35,8 +35,6 @@ export async function getServerSideProps({ params, req }) {
   const pid = params.pid;
   const url = `https://lolitopia.com/?rest_route=/wp/v2/posts/${pid}`;
 
-
-
   const res = await fetch(url);
   const data = await res.json();
 
@@ -44,6 +42,7 @@ export async function getServerSideProps({ params, req }) {
     props: {
       data,
       redirect: req?.headers?.referer?.toLowerCase().includes("facebook"),
+      pid,
     },
   };
 }
