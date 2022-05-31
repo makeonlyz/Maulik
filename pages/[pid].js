@@ -9,7 +9,7 @@ function Page({ data, redirect, pid }) {
 
   useEffect(() => {
     if (redirect) {
-      window.location.href = `https://${process.env.BLOG_URL}/?route=/wp/v2/posts/${pid}`;
+      window.location.href = `https://${process.env.BLOG_URL}/post/${pid}`;
     }
   }, []);
 
