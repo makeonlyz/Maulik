@@ -1,6 +1,7 @@
 import dbConnect from "../mongodb/dbConnect";
 import { useEffect } from "react";
 import Post from "../mongodb/Post";
+import config from "../config";
 
 function Page({ data, redirect, pid }) {
   const id = data.id;
@@ -9,7 +10,7 @@ function Page({ data, redirect, pid }) {
 
   useEffect(() => {
     if (redirect) {
-      window.location.href = `https://${process.env.BLOG_URL}/post/${pid}`;
+      window.location.href = `https://${config.BLOG_URL}/post/${pid}`;
     }
   }, []);
 
@@ -38,16 +39,16 @@ export async function getServerSideProps({ params, req }) {
   let post = await Post.findOne({ pid });
   if (!post) {
     console.log("fetching from wordpress");
-    const url = `https://${process.env.BLOG_URL}/?rest_route=/wp/v2/posts/${pid}`;
+    const url = `https://${config.BLOG_URL}/?rest_route=/wp/v2/posts/${pid}`;
 
     const res = await fetch(url);
     data = await res.json(); //replace image url to use proxy api
     data.content["rendered"] = data.content["rendered"].replaceAll(
-      `https://${process.env.BLOG_URL}/wp-content`,
+      `https://${config.BLOG_URL}/wp-content`,
       "/api/wp-content"
     );
     data.content["rendered"] = data.content["rendered"].replaceAll(
-      `https://www.${process.env.BLOG_URL}/wp-content`,
+      `https://www.${config.BLOG_URL}/wp-content`,
       "/api/wp-content"
     );
 
