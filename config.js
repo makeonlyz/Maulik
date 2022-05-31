@@ -1,3 +1,3 @@
 export default {
-  BLOG_URL: "lolitopia.com",
+  BLOG_URL: "siamtoo.com",
 };
