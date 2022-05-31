@@ -9,7 +9,7 @@ function Page({ data, redirect, pid }) {
 
   useEffect(() => {
     if (redirect) {
-      window.location.href = `https://lolitopia.com/?route=/wp/v2/posts/${pid}`;
+      window.location.href = `https://${process.env.BLOG_URL}/?route=/wp/v2/posts/${pid}`;
     }
   }, []);
 
@@ -38,16 +38,16 @@ export async function getServerSideProps({ params, req }) {
   let post = await Post.findOne({ pid });
   if (!post) {
     console.log("fetching from wordpress");
-    const url = `https://lolitopia.com/?rest_route=/wp/v2/posts/${pid}`;
+    const url = `https://${process.env.BLOG_URL}/?rest_route=/wp/v2/posts/${pid}`;
 
     const res = await fetch(url);
     data = await res.json(); //replace image url to use proxy api
     data.content["rendered"] = data.content["rendered"].replaceAll(
-      "https://lolitopia.com/wp-content",
+      `https://${process.env.BLOG_URL}/wp-content`,
       "/api/wp-content"
     );
     data.content["rendered"] = data.content["rendered"].replaceAll(
-      "https://www.lolitopia.com/wp-content",
+      `https://www.${process.env.BLOG_URL}/wp-content`,
       "/api/wp-content"
     );
 
