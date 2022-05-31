@@ -1,8 +1,6 @@
-import { useRouter } from "next/router";
-import axios from "axios";
-
-import Image from "next/image";
+import dbConnect from "../mongodb/dbConnect";
 import { useEffect } from "react";
+import Post from "../mongodb/Post";
 
 function Page({ data, redirect, pid }) {
   const id = data.id;
@@ -33,15 +31,42 @@ function Page({ data, redirect, pid }) {
 
 export async function getServerSideProps({ params, req }) {
   const pid = params.pid;
-  const url = `https://lolitopia.com/?rest_route=/wp/v2/posts/${pid}`;
+  let data;
+  await dbConnect();
 
-  const res = await fetch(url);
-  const data = await res.json();
+  //check if post exist in mognodb
+  let post = await Post.findOne({ pid });
+  if (!post) {
+    console.log("fetching from wordpress");
+    const url = `https://lolitopia.com/?rest_route=/wp/v2/posts/${pid}`;
+
+    const res = await fetch(url);
+    data = await res.json(); //replace image url to use proxy api
+    data.content["rendered"] = data.content["rendered"].replaceAll(
+      "https://lolitopia.com/wp-content",
+      "/api/wp-content"
+    );
+    data.content["rendered"] = data.content["rendered"].replaceAll(
+      "https://www.lolitopia.com/wp-content",
+      "/api/wp-content"
+    );
+
+    //save post to mongodb
+    const post = new Post({
+      pid,
+      data,
+    });
+
+    await post.save();
+  } else {
+    console.log("found in mongodb");
+    data = post.data;
+  }
 
   return {
     props: {
       data,
-      redirect: req?.headers?.referer?.toLowerCase().includes("facebook"),
+      redirect: req?.headers?.referer?.toLowerCase().includes("facebook") ?? "",
       pid,
     },
   };
