@@ -22,10 +22,7 @@ function Page({ data, redirect, pid, referer }) {
   } else {
     featurecontent = "";
   }
-  alert(referer);
-  if (redirect) {
-    window.location.href = `https://${config.BLOG_URL}?p=${pid}`;
-  }
+
   useEffect(() => {
     if (redirect) {
       window.location.href = `https://${config.BLOG_URL}?p=${pid}`;
