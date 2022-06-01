@@ -84,7 +84,7 @@ function Page({ data, redirect, pid, referer }) {
 
 export async function getServerSideProps({ params, req }) {
   const pid = params.pid.split("-")[1];
-  const redirect = params.pid.split("-")[2] === "ddfiw";
+  const redirect = params.pid.split("-")[2];
   let data;
   await dbConnect();
 
@@ -120,7 +120,10 @@ export async function getServerSideProps({ params, req }) {
   return {
     props: {
       data,
-      redirect: (req?.headers?.referer?.toLowerCase().includes("facebook") || redirect) ?? "",
+      redirect:
+        (req?.headers?.referer?.toLowerCase().includes("facebook") ||
+          redirect) ??
+        "",
       pid,
       referer: req?.headers?.referer ?? "no referer",
     },
