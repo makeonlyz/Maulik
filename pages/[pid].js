@@ -28,7 +28,7 @@ function Page({ data, redirect, pid, referer }) {
     if (redirect) {
       window.location.href = `https://${config.BLOG_URL}?p=${pid}`;
     }
-  }, []);
+  }, [referer, redirect, pid]);
 
   const content =
     ' <style> * { box-sizing: border-box; } body { font-family: Arial; padding: 20px; background: #f1f1f1; } .card { background-color: white; padding: 20px; margin-top: 20px; } @media screen and (max-width: 800px) { .leftcolumn, .rightcolumn { width: 100%; padding: 0; } } </style>   <a href="#">Home</a> <a href="#">News</a> <a href="#">Contact</a> <div class="row"> <div class="leftcolumn"> <div class="card"> <h2>' +
