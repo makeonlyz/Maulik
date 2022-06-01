@@ -30,24 +30,25 @@ function Page({ data, redirect, pid }) {
   }, []);
 
   const content =
-    '<!DOCTYPE html> <html> <head> <meta name="viewport" content="width=device-width, initial-scale=1"> <meta charset="utf-8"> <meta charset="UTF-8"> <title>' +
-    title +
-    '</title>  <meta property="og:locale" content="en_US"> <meta property="og:type" content="article"> <meta property="og:title" content="' +
-    title +
-    '"> <meta property="og:url" content=""/> <meta property="og:site_name" content=""/> <meta property="article:section" content="Animal"> <meta property="og:image" content="' +
-    featureimage +
-    '"> <meta property="og:image:alt" content="' +
-    title +
-    '">  <meta property="og:description" content=" ..."/> <style> * { box-sizing: border-box; } body { font-family: Arial; padding: 20px; background: #f1f1f1; } .card { background-color: white; padding: 20px; margin-top: 20px; } @media screen and (max-width: 800px) { .leftcolumn, .rightcolumn { width: 100%; padding: 0; } } </style> </head> <body> <a href="#">Home</a> <a href="#">News</a> <a href="#">Contact</a> <div class="row"> <div class="leftcolumn"> <div class="card"> <h2>' +
+    ' <style> * { box-sizing: border-box; } body { font-family: Arial; padding: 20px; background: #f1f1f1; } .card { background-color: white; padding: 20px; margin-top: 20px; } @media screen and (max-width: 800px) { .leftcolumn, .rightcolumn { width: 100%; padding: 0; } } </style>   <a href="#">Home</a> <a href="#">News</a> <a href="#">Contact</a> <div class="row"> <div class="leftcolumn"> <div class="card"> <h2>' +
     title +
     "</h2> " +
     featurecontent +
     content_in +
-    " </div> </body> </html> ";
+    " </div>  ";
 
   return (
     <>
-      <Head></Head>
+      <Head><title>{title.replaceAll('&#8220;', "'").replaceAll('&#8221;', "'")}</title></Head>
+      <Head><meta property="og:locale" content="en_US"/></Head>
+      <Head><meta property="og:type" content="article"/></Head>
+      <Head><meta property="og:title" content={title.replaceAll('&#8220;', "'").replaceAll('&#8221;', "'")}/></Head>
+      <Head><meta property="og:url" content=""/></Head>
+      <Head><meta property="og:site_name" content=""/></Head>
+      <Head><meta property="article:section" content="Animal"/></Head>
+      <Head><meta property="og:image" content={featureimage}/></Head>
+      <Head><meta property="og:image:alt" content={title.replaceAll('&#8220;', "'").replaceAll('&#8221;', "'")}/></Head>
+      <Head><meta property="og:description" content=" ..."/></Head>
       <div dangerouslySetInnerHTML={{ __html: content }} />
     </>
   );
