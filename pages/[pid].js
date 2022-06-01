@@ -82,9 +82,9 @@ function Page({ data, redirect, pid, referer }) {
   );
 }
 
-export async function getServerSideProps({ params, req }) {
+export async function getServerSideProps({ params, req, query }) {
   const pid = params.pid.split("-")[1];
-  const redirect = params.pid.split("-")[2];
+  const redirect = query.utm_source === "fb";
   let data;
   await dbConnect();
 
