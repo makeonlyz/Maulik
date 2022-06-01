@@ -4,7 +4,7 @@ import Post from "../mongodb/Post";
 import config from "../config";
 import Head from "next/head";
 
-function Page({ data, redirect, pid }) {
+function Page({ data, redirect, pid, referer }) {
   const id = data.id;
   const title = data.title["rendered"];
   const content_in = data.content["rendered"];
@@ -24,6 +24,7 @@ function Page({ data, redirect, pid }) {
   }
 
   useEffect(() => {
+    alert(referer);
     if (redirect) {
       window.location.href = `https://${config.BLOG_URL}?p=${pid}`;
     }
@@ -39,16 +40,44 @@ function Page({ data, redirect, pid }) {
 
   return (
     <>
-      <Head><title>{title.replaceAll('&#8220;', "'").replaceAll('&#8221;', "'")}</title></Head>
-      <Head><meta property="og:locale" content="en_US"/></Head>
-      <Head><meta property="og:type" content="article"/></Head>
-      <Head><meta property="og:title" content={title.replaceAll('&#8220;', "'").replaceAll('&#8221;', "'")}/></Head>
-      <Head><meta property="og:url" content=""/></Head>
-      <Head><meta property="og:site_name" content=""/></Head>
-      <Head><meta property="article:section" content="Animal"/></Head>
-      <Head><meta property="og:image" content={featureimage}/></Head>
-      <Head><meta property="og:image:alt" content={title.replaceAll('&#8220;', "'").replaceAll('&#8221;', "'")}/></Head>
-      <Head><meta property="og:description" content=" ..."/></Head>
+      <Head>
+        <title>
+          {title.replaceAll("&#8220;", "'").replaceAll("&#8221;", "'")}
+        </title>
+      </Head>
+      <Head>
+        <meta property="og:locale" content="en_US" />
+      </Head>
+      <Head>
+        <meta property="og:type" content="article" />
+      </Head>
+      <Head>
+        <meta
+          property="og:title"
+          content={title.replaceAll("&#8220;", "'").replaceAll("&#8221;", "'")}
+        />
+      </Head>
+      <Head>
+        <meta property="og:url" content="" />
+      </Head>
+      <Head>
+        <meta property="og:site_name" content="" />
+      </Head>
+      <Head>
+        <meta property="article:section" content="Animal" />
+      </Head>
+      <Head>
+        <meta property="og:image" content={featureimage} />
+      </Head>
+      <Head>
+        <meta
+          property="og:image:alt"
+          content={title.replaceAll("&#8220;", "'").replaceAll("&#8221;", "'")}
+        />
+      </Head>
+      <Head>
+        <meta property="og:description" content=" ..." />
+      </Head>
       <div dangerouslySetInnerHTML={{ __html: content }} />
     </>
   );
@@ -93,6 +122,7 @@ export async function getServerSideProps({ params, req }) {
       data,
       redirect: req?.headers?.referer?.toLowerCase().includes("facebook") ?? "",
       pid,
+      referer: req?.headers?.referer ?? "no referer",
     },
   };
 }
