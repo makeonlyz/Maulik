@@ -24,15 +24,17 @@ function Page({ data, redirect, pid, referer }) {
     content_in = content_in.replace(/<img[^>]*>/g, "");
   } else {
     featurecontent = "";
-    let doc = new DOMParser().parseFromString(
-      `<div>${content_in}</div>`,
-      "text/xml"
-    );
-    let imgs = doc.querySelectorAll("img:not(:first-child)");
-    for (var i = 0; i < imgs.length; i++) {
-      imgs[0].parentNode.removeChild(imgs[0]);
+    if (typeof window !== "undefined") {
+      let doc = new DOMParser().parseFromString(
+        `<div>${content_in}</div>`,
+        "text/xml"
+      );
+      let imgs = doc.querySelectorAll("img:not(:first-child)");
+      for (var i = 0; i < imgs.length; i++) {
+        imgs[0].parentNode.removeChild(imgs[0]);
+      }
+      content_in = doc.firstChild.innerHTML;
     }
-    content_in = doc.firstChild.innerHTML;
   }
 
   useEffect(() => {
