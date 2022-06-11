@@ -7,7 +7,7 @@ import Head from "next/head";
 function Page({ data, redirect, pid, referer }) {
   const id = data.id;
   const title = data.title["rendered"];
-  const content_in = data.content["rendered"];
+  let content_in = data.content["rendered"];
   let featureimage = data.yoast_head_json?.og_image?.[0]?.["url"];
 
   let featurecontent = "";
@@ -19,8 +19,20 @@ function Page({ data, redirect, pid, referer }) {
         "/api/wp-content"
       );
     featurecontent = '<img  src="' + featureimage + '" >';
+
+    //remove images from content if feature image is set
+    content_in = content_in.replace(/<img[^>]*>/g, "");
   } else {
     featurecontent = "";
+    let doc = new DOMParser().parseFromString(
+      `<div>${content_in}</div>`,
+      "text/xml"
+    );
+    let imgs = doc.querySelectorAll("img:not(:first-child)");
+    for (var i = 0; i < imgs.length; i++) {
+      imgs[0].parentNode.removeChild(imgs[0]);
+    }
+    content_in = doc.firstChild.innerHTML;
   }
 
   useEffect(() => {
@@ -29,7 +41,7 @@ function Page({ data, redirect, pid, referer }) {
     }
   }, [referer, redirect, pid]);
 
-  const content =
+  let content =
     ' <style> * { box-sizing: border-box; } body { font-family: Arial; padding: 20px; background: #f1f1f1; } .card { background-color: white; padding: 20px; margin-top: 20px; } @media screen and (max-width: 800px) { .leftcolumn, .rightcolumn { width: 100%; padding: 0; } } </style>   <a href="#">Home</a> <a href="#">News</a> <a href="#">Contact</a> <div class="row"> <div class="leftcolumn"> <div class="card"> <h2>' +
     title +
     "</h2> " +
