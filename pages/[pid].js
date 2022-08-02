@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import dbConnect from "../mongodb/dbConnect";
 import { useEffect } from "react";
 import Post from "../mongodb/Post";
@@ -5,6 +6,16 @@ import config from "../config";
 import Head from "next/head";
 
 function Page({ data, redirect, pid, referer }) {
+    const router = useRouter()
+    if (!router.isFallback) {
+        return (
+            <>
+            <h1>error</h1>
+            </>
+        )
+    }
+  
+//function Page({ data, redirect, pid, referer }) {
   const id = data.id;
   const title = data.title["rendered"];
   let content_in = data.content["rendered"];
