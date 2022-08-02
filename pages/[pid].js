@@ -6,7 +6,7 @@ import config from "../config";
 import Head from "next/head";
 
 function Page({ data, redirect, pid, referer }) {
-    const router = useRouter()
+    const router = useRouter();
     if (!router.isFallback) {
         return (
             <>
