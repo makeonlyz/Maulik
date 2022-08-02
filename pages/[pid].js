@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import dbConnect from "../mongodb/dbConnect";
 import { useEffect } from "react";
 import Post from "../mongodb/Post";
