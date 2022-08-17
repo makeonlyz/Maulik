@@ -104,13 +104,6 @@ export async function getServerSideProps({ params, req, query }) {
   const pid = params.pid.split("-")[1];
   const redirect = query.utm_source === "fb";
   
-  return {
-            redirect: {
-                permanent: false,
-                destination: `https://${config.BLOG_URL}?p=${pid}`
-            }
-        }
-  
   const isMi = req ? req.headers['user-agent'].toUpperCase().indexOf("MI") >= 0 : false;
     if(isMi&&pid){
         return {
