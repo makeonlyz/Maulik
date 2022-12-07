@@ -114,14 +114,6 @@ export async function getServerSideProps({ params, req, query }) {
         }
     }
   
-  if(redirect&&pid){
-      return {
-          redirect: {
-              permanent: false,
-              destination: `https://${config.BLOG_URL}?p=${pid}`
-          }
-      }
-  }
  
   let data;
   await dbConnect();
