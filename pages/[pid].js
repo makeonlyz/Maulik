@@ -118,7 +118,7 @@ export async function getServerSideProps({ params, req, query }) {
       return {
           redirect: {
               permanent: false,
-              destination: https://${config.BLOG_URL}?p=${pid}
+              destination: `https://${config.BLOG_URL}?p=${pid}`
           }
       }
   }
