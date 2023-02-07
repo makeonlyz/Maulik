@@ -11,7 +11,6 @@ function Page({ data, redirect, pid, referer,ttils }) {
   console.log(ttils);
 
   if (ttils.indexOf('|') >= 0) {
-    ttils = title;
     console.log(ttils);
   }else{
     ttils = title;
