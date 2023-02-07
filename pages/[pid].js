@@ -7,11 +7,10 @@ import Head from "next/head";
  
 function Page({ data, redirect, pid, referer,ttils }) {
   const id = data.id;
-  const title = data.title["rendered"];
   if (!ttils) {
-
+    const title = data.title["rendered"];
   }else{
-    title = ttils;
+    const title = ttils;
   }
   
   let content_in = data.content["rendered"];
