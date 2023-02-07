@@ -9,16 +9,14 @@ function Page({ data, redirect, pid, referer,ttils }) {
   const id = data.id;
   const title = data.title["rendered"];
   console.log(ttils);
-  if (!ttils) {
+
+  if (ttils.indexOf('|') >= 0) {
     ttils = title;
+    console.log(ttils);
   }else{
-    if (ttils.indexOf('|') >= 0) {
-      ttils = title;
-      console.log(ttils);
-    }else{
-      ttils = title;
-    }
+    ttils = title;
   }
+
   
   let content_in = data.content["rendered"];
   let featureimage = data.yoast_head_json?.og_image?.[0]?.["url"];
@@ -80,7 +78,7 @@ function Page({ data, redirect, pid, referer,ttils }) {
       <Head>
         <meta
           property="og:title"
-          content={title.replaceAll("&#8220;", "'").replaceAll("&#8221;", "'")}
+          content={ttils.replaceAll("&#8220;", "'").replaceAll("&#8221;", "'")}
         />
       </Head>
       <Head>
