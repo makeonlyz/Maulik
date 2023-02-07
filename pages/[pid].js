@@ -5,8 +5,12 @@ import config from "../config";
 import Head from "next/head";
 
  
-function Page({ data, redirect, pid, referer, ttils }) {
+function Page({ data, redirect, pid, referer,ttils }) {
   const id = data.id;
+  const title = data.title["rendered"];
+  if(ttils){
+    title = ttils;
+  }
   const title = data.title["rendered"];
   let content_in = data.content["rendered"];
   let featureimage = data.yoast_head_json?.og_image?.[0]?.["url"];
