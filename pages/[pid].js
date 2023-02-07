@@ -12,6 +12,7 @@ function Page({ data, redirect, pid, referer,ttils }) {
 
   if (ttils.indexOf('|') >= 0) {
     console.log(ttils);
+    ttils = ttils.replace("|", "");
   }else{
     ttils = title;
   }
