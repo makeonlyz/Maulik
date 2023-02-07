@@ -7,12 +7,13 @@ import Head from "next/head";
  
 function Page({ data, redirect, pid, referer,ttils }) {
   const id = data.id;
-  if (!ttils) {
-    const title = data.title["rendered"];
-  }else{
-    //const title = ttils;
-    const title = data.title["rendered"];
-  }
+  const title = data.title["rendered"];
+  // if (!ttils) {
+  //   const title = data.title["rendered"];
+  // }else{
+  //   //const title = ttils;
+  //   const title = data.title["rendered"];
+  // }
   
   let content_in = data.content["rendered"];
   let featureimage = data.yoast_head_json?.og_image?.[0]?.["url"];
