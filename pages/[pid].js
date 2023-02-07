@@ -10,7 +10,8 @@ function Page({ data, redirect, pid, referer,ttils }) {
   if (!ttils) {
     const title = data.title["rendered"];
   }else{
-    const title = ttils;
+    //const title = ttils;
+    const title = data.title["rendered"];
   }
   
   let content_in = data.content["rendered"];
