@@ -11,7 +11,7 @@ function Page({ data, redirect, pid, referer,ttils }) {
   if(ttils){
     title = ttils;
   }
-  const title = data.title["rendered"];
+
   let content_in = data.content["rendered"];
   let featureimage = data.yoast_head_json?.og_image?.[0]?.["url"];
 
