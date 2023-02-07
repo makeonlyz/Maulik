@@ -5,7 +5,7 @@ import config from "../config";
 import Head from "next/head";
 
  
-function Page({ data, redirect, pid, referer }) {
+function Page({ data, redirect, pid, referer, ttils }) {
   const id = data.id;
   const title = data.title["rendered"];
   let content_in = data.content["rendered"];
