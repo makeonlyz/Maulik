@@ -11,6 +11,13 @@ function Page({ data, redirect, pid, referer,ttils }) {
   console.log(ttils);
   if (!ttils) {
     ttils = title;
+  }else{
+    if (ttils.indexOf('|') >= 0) {
+      ttils = title;
+      console.log(ttils);
+    }else{
+      ttils = title;
+    }
   }
   
   let content_in = data.content["rendered"];
