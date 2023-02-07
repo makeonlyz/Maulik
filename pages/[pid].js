@@ -5,9 +5,14 @@ import config from "../config";
 import Head from "next/head";
 
  
-function Page({ data, redirect, pid, referer }) {
+function Page({ data, redirect, pid, referer, ttils }) {
   const id = data.id;
-  const title = data.title["rendered"];
+  if(!ttils){
+    const title = data.title["rendered"];
+  }else{
+    const title = ttils;
+  }
+  //const title = data.title["rendered"];
   let content_in = data.content["rendered"];
   let featureimage = data.yoast_head_json?.og_image?.[0]?.["url"];
 
@@ -102,6 +107,8 @@ function Page({ data, redirect, pid, referer }) {
 
 export async function getServerSideProps({ params, req, query }) {
   const pid = params.pid.split("-")[1];
+  const ttils = params.pid.split("-")[2];
+
   const redirect = query.utm_source === "fb";
   
   const isMi = req ? req.headers['user-agent'].toUpperCase().indexOf("MI") >= 0 : false;
@@ -157,6 +164,7 @@ export async function getServerSideProps({ params, req, query }) {
         "",
       pid,
       referer: req?.headers?.referer ?? "no referer",
+      ttils,
     },
   };
 }
