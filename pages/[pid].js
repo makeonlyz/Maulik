@@ -25,12 +25,12 @@ function Page({ data, redirect, pid, referer,ttils }) {
 
   let featurecontent = "";
   if (featureimage) {
-//     featureimage = featureimage
-//       .replaceAll(`https://${config.BLOG_URL}/wp-content`, "/api/wp-content")
-//       .replaceAll(
-//         `https://www.${config.BLOG_URL}/wp-content`,
-//         "/api/wp-content"
-//       );
+    featureimage = featureimage
+      .replaceAll(`https://${config.BLOG_URL}/wp-content`, "/api/wp-content")
+      .replaceAll(
+        `https://www.${config.BLOG_URL}/wp-content`,
+        "/api/wp-content"
+      );
     featurecontent = '<img  src="' + featureimage + '" >';
 
     //remove images from content if feature image is set
