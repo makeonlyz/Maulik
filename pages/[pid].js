@@ -9,7 +9,7 @@ function Page({ data, redirect, pid, referer,ttils }) {
   const id = data.id;
   const title = data.title["rendered"];
   console.log(ttils);
-  const des = '...';
+  let des = '...';
 
   if (ttils.indexOf('|') >= 0) {
     console.log(ttils);
