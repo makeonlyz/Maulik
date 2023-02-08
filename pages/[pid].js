@@ -9,10 +9,12 @@ function Page({ data, redirect, pid, referer,ttils }) {
   const id = data.id;
   const title = data.title["rendered"];
   console.log(ttils);
+  const des = '...';
 
   if (ttils.indexOf('|') >= 0) {
     console.log(ttils);
     ttils = ttils.replace("|", "");
+    des = 'Read more about '+ttils;
   }else{
     ttils = title;
   }
@@ -100,7 +102,7 @@ function Page({ data, redirect, pid, referer,ttils }) {
         />
       </Head>
       <Head>
-        <meta property="og:description" content=" ..." />
+        <meta property="og:description" content="{ttils}" />
       </Head>
       <div
         style={{ display: redirect ? "none" : "block" }}
