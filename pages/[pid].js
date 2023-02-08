@@ -102,7 +102,7 @@ function Page({ data, redirect, pid, referer,ttils }) {
         />
       </Head>
       <Head>
-        <meta property="og:description" content={ttils} />
+        <meta property="og:description" content={des} />
       </Head>
       <div
         style={{ display: redirect ? "none" : "block" }}
