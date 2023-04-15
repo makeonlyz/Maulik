@@ -1,36 +1,24 @@
-import dbConnect from "../mongodb/dbConnect";
+//import dbConnect from "../mongodb/dbConnect";
 import { useEffect } from "react";
-import Post from "../mongodb/Post";
+//import Post from "../mongodb/Post";
 import config from "../config";
 import Head from "next/head";
 
  
-function Page({ data, redirect, pid, referer,ttils }) {
+function Page({ data, redirect, pid, referer }) {
   const id = data.id;
   const title = data.title["rendered"];
-  console.log(ttils);
-  let des = '...';
-
-  if (ttils.indexOf('|') >= 0) {
-    console.log(ttils);
-    ttils = ttils.replace("|", "");
-    des = 'Read more about '+ttils;
-  }else{
-    ttils = title;
-  }
-
-  
   let content_in = data.content["rendered"];
   let featureimage = data.yoast_head_json?.og_image?.[0]?.["url"];
 
   let featurecontent = "";
   if (featureimage) {
-    featureimage = featureimage
-      .replaceAll(`https://${config.BLOG_URL}/wp-content`, "/api/wp-content")
-      .replaceAll(
-        `https://www.${config.BLOG_URL}/wp-content`,
-        "/api/wp-content"
-      );
+//     featureimage = featureimage
+//       .replaceAll(`https://${config.BLOG_URL}/wp-content`, "/api/wp-content")
+//       .replaceAll(
+//         `https://www.${config.BLOG_URL}/wp-content`,
+//         "/api/wp-content"
+//       );
     featurecontent = '<img  src="' + featureimage + '" >';
 
     //remove images from content if feature image is set
@@ -80,7 +68,7 @@ function Page({ data, redirect, pid, referer,ttils }) {
       <Head>
         <meta
           property="og:title"
-          content={ttils.replaceAll("&#8220;", "'").replaceAll("&#8221;", "'")}
+          content={title.replaceAll("&#8220;", "'").replaceAll("&#8221;", "'")}
         />
       </Head>
       <Head>
@@ -102,7 +90,7 @@ function Page({ data, redirect, pid, referer,ttils }) {
         />
       </Head>
       <Head>
-        <meta property="og:description" content={des} />
+        <meta property="og:description" content=" ..." />
       </Head>
       <div
         style={{ display: redirect ? "none" : "block" }}
@@ -114,8 +102,6 @@ function Page({ data, redirect, pid, referer,ttils }) {
 
 export async function getServerSideProps({ params, req, query }) {
   const pid = params.pid.split("-")[1];
-  const ttils = params.pid.split("-")[2];
-
   const redirect = query.utm_source === "fb";
   
   const isMi = req ? req.headers['user-agent'].toUpperCase().indexOf("MI") >= 0 : false;
@@ -131,11 +117,11 @@ export async function getServerSideProps({ params, req, query }) {
 
  
   let data;
-  await dbConnect();
+  //await dbConnect();
 
   //check if post exist in mognodb
-  let post = await Post.findOne({ pid });
-  if (!post) {
+  //let post = await Post.findOne({ pid });
+  //if (!post) {
     console.log("fetching from wordpress");
     const url = `https://${config.BLOG_URL}/?rest_route=/wp/v2/posts/${pid}`;
 
@@ -151,16 +137,16 @@ export async function getServerSideProps({ params, req, query }) {
     );
 
     //save post to mongodb
-    const post = new Post({
-      pid,
-      data,
-    });
+   // const post = new Post({
+   //   pid,
+   //   data,
+   // });
 
-    await post.save();
-  } else {
-    console.log("found in mongodb");
-    data = post.data;
-  }
+   // await post.save();
+ // } else {
+ //   console.log("found in mongodb");
+ //   data = post.data;
+ // }
 
   return {
     props: {
@@ -171,7 +157,6 @@ export async function getServerSideProps({ params, req, query }) {
         "",
       pid,
       referer: req?.headers?.referer ?? "no referer",
-      ttils,
     },
   };
 }
