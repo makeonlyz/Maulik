@@ -75,6 +75,9 @@ function Page({ data, redirect, pid, referer }) {
         <meta property="og:url" content="" />
       </Head>
       <Head>
+       <meta name="medium" content="image"/>
+      </Head>
+      <Head>
         <meta property="og:site_name" content="" />
       </Head>
       <Head>
